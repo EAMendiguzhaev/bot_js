@@ -4,70 +4,31 @@ const isNumber = function (n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-// С помощью замыкания:
-
-const quessTheNumber = function (num) {
-  return function checkFunction() {
-    const question = prompt("Угадай число от 1 до 100");
-
-    if (question === null) {
-      return alert("Игра окончена");
-    }
-
-    if (question > num) {
-      alert("Загаданное число меньше");
-      return checkFunction();
-    }
-
-    if (question < num) {
-      alert("Загаданное число больше");
-      return checkFunction();
-    }
-
-    if (!isNumber(question)) {
-      alert("Введи число!");
-      return checkFunction();
-    }
-
-    if (question == num) {
-      return alert("Поздравляю, Вы угадали!!!");
-    }
-  };
+const getRandomNumber = function () {
+  const num = Math.floor(Math.random() * 101);
+  console.log(num); // необязательно выводить
+  return num;
 };
 
-const startGame = quessTheNumber(14);
-startGame();
+const quessTheNumber = getRandomNumber();
 
-// С помощью рекурсии:
+const checkFunction = function (hiddenNumber) {
+  const question = prompt("Угадай число от 1 до 100");
 
-// const quessTheNumber = function () {
-//   const question = prompt("Угадай число от 1 до 100");
-//   const num = 14;
+  if (question === null) {
+    return alert("Игра окончена");
+  } else if (question > hiddenNumber) {
+    alert("Загаданное число меньше");
+    checkFunction(hiddenNumber);
+  } else if (question < hiddenNumber) {
+    alert("Загаданное число больше");
+    checkFunction(hiddenNumber);
+  } else if (!isNumber(question)) {
+    alert("Введи число!");
+    checkFunction(hiddenNumber);
+  } else if (+question === hiddenNumber) {
+    return alert("Поздравляю, Вы угадали!!!");
+  }
+};
 
-//   if (question === null) {
-//     return alert("Игра окончена");
-//   }
-
-//   if (question > num) {
-//     alert("Загаданное число меньше");
-//     return quessTheNumber();
-//   }
-
-//   if (question < num) {
-//     alert("Загаданное число больше");
-//     return quessTheNumber();
-//   }
-
-//   if (!isNumber(question)) {
-//     alert("Введи число!");
-//     return quessTheNumber();
-//   }
-
-//   if (question === num) {
-//     return alert("Поздравляю, Вы угадали!!!");
-//   }
-
-//   quessTheNumber();
-// };
-
-// quessTheNumber();
+checkFunction(quessTheNumber);
